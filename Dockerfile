@@ -1,14 +1,14 @@
-# Usa Nginx ligero
+# Imagen ligera de Nginx
 FROM nginx:alpine
 
-# Elimina archivos por defecto de nginx
+# Eliminar archivos por defecto de nginx
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copia todos los archivos del proyecto
+# Copiar todos los archivos del proyecto
 COPY . /usr/share/nginx/html
 
-# Expone el puerto 80
+# Exponer puerto para Render
 EXPOSE 80
 
-# Inicia nginx
+# Iniciar nginx
 CMD ["nginx", "-g", "daemon off;"]
