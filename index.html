@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroClass</title>  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">  <script src="https://cdn.tailwindcss.com"></script>  <script src="https://unpkg.com/lucide@latest"></script>  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(99, 102, 241, 0.15), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.12), transparent 30%),
+        #0b1120;
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow:
+        0 10px 40px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .pulse-soft {
+      animation: pulseSoft 3s infinite;
+    }
+
+    @keyframes pulseSoft {
+      0% {
+        box-shadow: 0 0 0 0 rgba(99,102,241,0.3);
+      }
+      70% {
+        box-shadow: 0 0 0 18px rgba(99,102,241,0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(99,102,241,0);
+      }
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99,102,241,0.4);
+    }
+
+    .line {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .line::after {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      animation: shine 4s linear infinite;
+    }
+
+    @keyframes shine {
+      from {
+        transform: translateX(-50%);
+      }
+      to {
+        transform: translateX(50%);
+      }
+    }
+  </style></head>
+<body class="min-h-screen grid-bg">  <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+    <div class="w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl absolute -top-32 -left-32"></div>
+    <div class="w-96 h-96 bg-blue-500/10 rounded-full blur-3xl absolute bottom-0 right-0"></div>
+  </div>  <main class="relative z-10 px-6 py-6 lg:px-10"><!-- NAVBAR -->
+<nav class="glass rounded-3xl px-6 py-4 flex items-center justify-between mb-8 sticky top-4 z-50">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center pulse-soft">
+      <i data-lucide="brain-circuit" class="w-5 h-5 text-white"></i>
+    </div>
+
+    <div>
+      <h1 class="font-bold text-lg">NeuroClass</h1>
+      <p class="text-xs text-slate-400">Adaptive Learning Platform</p>
+    </div>
+  </div>
+
+  <div class="hidden md:flex items-center gap-8 text-sm text-slate-300">
+    <a href="#" class="hover:text-white transition">Dashboard</a>
+    <a href="#" class="hover:text-white transition">Analytics</a>
+    <a href="#" class="hover:text-white transition">Sessions</a>
+    <a href="#" class="hover:text-white transition">AI Tutor</a>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <button class="bg-white/5 hover:bg-white/10 transition px-4 py-2 rounded-xl border border-white/5 text-sm">
+      Live Session
+    </button>
+
+    <div class="w-11 h-11 rounded-2xl overflow-hidden border border-white/10">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover" />
+    </div>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="grid lg:grid-cols-2 gap-8 items-center mb-8">
+
+  <div class="space-y-6">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/20 bg-indigo-500/10 text-indigo-200 text-sm">
+      <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+      AI-powered cognitive adaptation
+    </div>
+
+    <h2 class="text-5xl lg:text-6xl font-extrabold leading-tight gradient-text">
+      Learning that adapts to your attention.
+    </h2>
+
+    <p class="text-slate-400 text-lg leading-relaxed max-w-xl">
+      NeuroClass analyzes focus, engagement and learning behavior in real time to dynamically personalize the educational experience.
+    </p>
+
+    <div class="flex flex-wrap gap-4 pt-2">
+      <button class="bg-white text-slate-900 px-6 py-3 rounded-2xl font-semibold hover:scale-[1.02] transition">
+        Start Session
+      </button>
+
+      <button class="glass px-6 py-3 rounded-2xl font-medium hover:bg-white/5 transition">
+        Watch Demo
+      </button>
+    </div>
+  </div>
+
+
+  <!-- MAIN PREVIEW -->
+  <div class="glass rounded-[2rem] p-5 floating line">
+
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h3 class="font-semibold text-lg">Live Cognitive Session</h3>
+        <p class="text-sm text-slate-400">Mathematics · Adaptive Mode</p>
+      </div>
+
+      <div class="flex items-center gap-2 text-emerald-400 text-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Active
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mb-4">
+
+      <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4 card-hover">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-sm text-slate-400">Attention</p>
+          <i data-lucide="activity" class="w-4 h-4 text-indigo-300"></i>
+        </div>
+
+        <div class="flex items-end gap-2">
+          <h4 class="text-4xl font-bold">84%</h4>
+          <span class="text-emerald-400 text-sm mb-1">+12%</span>
+        </div>
+
+        <div class="mt-4 h-2 bg-white/5 rounded-full overflow-hidden">
+          <div class="h-full w-[84%] bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full"></div>
+        </div>
+      </div>
+
+      <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4 card-hover">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-sm text-slate-400">Engagement</p>
+          <i data-lucide="sparkles" class="w-4 h-4 text-blue-300"></i>
+        </div>
+
+        <div class="flex items-end gap-2">
+          <h4 class="text-4xl font-bold">High</h4>
+        </div>
+
+        <p class="text-sm text-slate-400 mt-4 leading-relaxed">
+          Visual interaction increased attention stability.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="grid md:grid-cols-[1.3fr,0.7fr] gap-4">
+
+      <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4 min-h-[240px] relative overflow-hidden">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h4 class="font-semibold">Focus Timeline</h4>
+            <p class="text-sm text-slate-400">Last 5 minutes</p>
+          </div>
+
+          <div class="text-xs px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-200">
+            Stable
+          </div>
+        </div>
+
+        <div class="absolute inset-0 flex items-end gap-2 px-5 pb-5 opacity-90">
+          <div class="w-full bg-indigo-400/40 rounded-full h-20"></div>
+          <div class="w-full bg-indigo-400/50 rounded-full h-28"></div>
+          <div class="w-full bg-indigo-400/60 rounded-full h-32"></div>
+          <div class="w-full bg-indigo-400/80 rounded-full h-44"></div>
+          <div class="w-full bg-blue-400/80 rounded-full h-40"></div>
+          <div class="w-full bg-blue-400/60 rounded-full h-36"></div>
+          <div class="w-full bg-blue-400/70 rounded-full h-48"></div>
+          <div class="w-full bg-indigo-300/70 rounded-full h-52"></div>
+        </div>
+      </div>
+
+      <div class="bg-white/[0.03] border border-white/5 rounded-2xl p-4 flex flex-col justify-between">
+
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h4 class="font-semibold">AI Tutor</h4>
+              <p class="text-sm text-slate-400">Adaptive feedback</p>
+            </div>
+
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-blue-500/20 border border-white/10 flex items-center justify-center">
+              <i data-lucide="bot" class="w-5 h-5 text-indigo-200"></i>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="bg-white/5 rounded-2xl p-3 text-sm text-slate-300 leading-relaxed">
+              “Your attention dropped slightly. Let's try a more visual explanation.”
+            </div>
+
+            <div class="bg-indigo-500/10 border border-indigo-500/10 rounded-2xl p-3 text-sm text-indigo-100 leading-relaxed">
+              Interactive mode activated.
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 flex items-center gap-3 text-sm text-slate-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Real-time adaptive feedback active
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- STATS -->
+<section class="grid md:grid-cols-3 gap-6 mb-8">
+
+  <div class="glass rounded-3xl p-6 card-hover">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p class="text-slate-400 text-sm">Average Focus</p>
+        <h3 class="text-3xl font-bold mt-1">91%</h3>
+      </div>
+
+      <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+        <i data-lucide="brain" class="w-6 h-6 text-indigo-300"></i>
+      </div>
+    </div>
+
+    <p class="text-sm text-slate-400 leading-relaxed">
+      Students maintained higher engagement during adaptive sessions.
+    </p>
+  </div>
+
+  <div class="glass rounded-3xl p-6 card-hover">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p class="text-slate-400 text-sm">Session Stability</p>
+        <h3 class="text-3xl font-bold mt-1">Excellent</h3>
+      </div>
+
+      <div class="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+        <i data-lucide="shield-check" class="w-6 h-6 text-blue-300"></i>
+      </div>
+    </div>
+
+    <p class="text-sm text-slate-400 leading-relaxed">
+      Real-time adaptation remained smooth and responsive.
+    </p>
+  </div>
+
+  <div class="glass rounded-3xl p-6 card-hover">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p class="text-slate-400 text-sm">AI Responses</p>
+        <h3 class="text-3xl font-bold mt-1">Instant</h3>
+      </div>
+
+      <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+        <i data-lucide="zap" class="w-6 h-6 text-emerald-300"></i>
+      </div>
+    </div>
+
+    <p class="text-sm text-slate-400 leading-relaxed">
+      Educational content adapts dynamically based on user behavior.
+    </p>
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer class="glass rounded-3xl px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+  <div>
+    © 2026 NeuroClass — Adaptive Cognitive Learning Interface
+  </div>
+
+  <div class="flex items-center gap-6">
+    <a href="#" class="hover:text-white transition">Documentation</a>
+    <a href="#" class="hover:text-white transition">Privacy</a>
+    <a href="#" class="hover:text-white transition">Research</a>
+  </div>
+</footer>
+
+  </main>  <script>
+    lucide.createIcons();
+  </script></body>
+</html>
