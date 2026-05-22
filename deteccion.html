@@ -4,28 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>NeuroClass Face Tracking</title>
+  <title>NeuroClass Attention Tracking</title>
 
   <style>
+
     body{
       margin:0;
       background:black;
       display:flex;
       justify-content:center;
       align-items:center;
+      flex-direction:column;
       height:100vh;
+      overflow:hidden;
+      font-family:Arial;
+      color:white;
+    }
+
+    .container{
+      position:relative;
     }
 
     canvas{
       border-radius:20px;
+      max-width:90vw;
+      max-height:80vh;
     }
+
+    .status{
+      margin-top:20px;
+      padding:15px 25px;
+      border-radius:15px;
+      background:#111;
+      border:1px solid #00ffaa;
+
+      text-align:center;
+      min-width:250px;
+    }
+
+    .metric{
+      font-size:28px;
+      font-weight:bold;
+      color:#00ffaa;
+    }
+
+    .label{
+      margin-top:10px;
+      font-size:18px;
+      opacity:0.8;
+    }
+
   </style>
 </head>
 
 <body>
 
-  <video id="video" autoplay playsinline style="display:none;"></video>
-  <canvas id="canvas"></canvas>
+  <div class="container">
+    <video id="video" autoplay playsinline style="display:none;"></video>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <div class="status">
+    <div class="metric" id="attentionText">
+      Detecting...
+    </div>
+
+    <div class="label" id="attentionScore">
+      Attention Score: 100%
+    </div>
+  </div>
 
   <script type="module">
 
@@ -39,21 +86,29 @@
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
+    const attentionText =
+      document.getElementById("attentionText");
+
+    const attentionScore =
+      document.getElementById("attentionScore");
+
     async function init() {
 
-      // Activar webcam
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video:true
-      });
+      // ACTIVAR WEBCAM
+      const stream =
+        await navigator.mediaDevices.getUserMedia({
+          video:true
+        });
 
       video.srcObject = stream;
 
       await video.play();
 
-      // Cargar MediaPipe
-      const vision = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
-      );
+      // CARGAR MEDIAPIPE
+      const vision =
+        await FilesetResolver.forVisionTasks(
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
+        );
 
       const faceLandmarker =
         await FaceLandmarker.createFromOptions(
@@ -74,7 +129,20 @@
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
 
-        ctx.drawImage(video,0,0,canvas.width,canvas.height);
+        ctx.clearRect(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        ctx.drawImage(
+          video,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
 
         const results =
           faceLandmarker.detectForVideo(
@@ -82,6 +150,7 @@
             performance.now()
           );
 
+        // SI DETECTA ROSTRO
         if(results.faceLandmarks.length > 0){
 
           const drawingUtils =
@@ -89,6 +158,7 @@
 
           for(const landmarks of results.faceLandmarks){
 
+            // DIBUJAR MALLA FACIAL
             drawingUtils.drawConnectors(
               landmarks,
               FaceLandmarker.FACE_LANDMARKS_TESSELATION,
@@ -97,7 +167,51 @@
                 lineWidth:1
               }
             );
+
+            // LANDMARKS IMPORTANTES
+            const nose = landmarks[1];
+
+            // POSICIÓN DE NARIZ
+            const noseX = nose.x;
+
+            let attention = 100;
+            let state = "Focused";
+
+            // SI MIRA A OTRO LADO
+            if(noseX < 0.35 || noseX > 0.65){
+
+              attention = 35;
+              state = "Distracted";
+
+            }
+
+            // ESTADO NORMAL
+            else{
+
+              attention = 95;
+              state = "Focused";
+
+            }
+
+            // ACTUALIZAR UI
+            attentionText.innerText = state;
+
+            attentionScore.innerText =
+              `Attention Score: ${attention}%`;
+
           }
+
+        }
+
+        // SIN ROSTRO
+        else{
+
+          attentionText.innerText =
+            "No Face Detected";
+
+          attentionScore.innerText =
+            "Attention Score: 0%";
+
         }
 
         requestAnimationFrame(detect);
